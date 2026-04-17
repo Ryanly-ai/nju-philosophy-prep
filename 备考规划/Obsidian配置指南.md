@@ -47,26 +47,13 @@
 - **Commit message**：`vault: auto-sync {{date}}`
 - **Pull updates on startup**：开启 ✅
 
-⚠ **前置条件**：vault 根目录 `~/Desktop/哲学史/` 已经是一个 git repo 吗？
+✅ **已配置完成**：vault 根目录 `~/Desktop/哲学史/` 已经初始化为 git repo，tracking 远程 `Ryanly-ai/nju-philosophy-prep` 的 main 分支。
 
-目前只有 `~/Desktop/哲学史/备考规划/` 里是 git repo（指向 `Ryanly-ai/nju-philosophy-prep`）。要让 Obsidian Git 工作，有两个选择：
+`.gitignore` 已排除：
+- `.DS_Store` / `.obsidian/workspace*.json`（本机状态）
+- `备考建议和历代真题/`（本地研究资料，不上传）
 
-**方案 A（推荐）：只把 vault 里的"备考规划"子目录推到 repo**
-
-这种情况最简单——让 Obsidian Git 的 working directory 指向子目录：
-
-- 设置 → Obsidian Git → **Custom base path (inside vault)**：`备考规划`
-
-Obsidian Git 就只 commit 子目录里的变动（原著 / 教材 / 备考建议不会意外上传）。
-
-**方案 B：整个 vault 都做 git repo**
-
-把 `~/Desktop/哲学史/` 整体变成一个新 repo，所有资料全同步到 GitHub。这样原著 PDF / markdown 也会被上传——**不推荐**，因为：
-- 版权风险（上传他人编译的书籍到公开 repo）
-- repo 太大
-- PDF 不适合 git 管理
-
-**请选方案 A**。
+所以 Obsidian Git **无需额外配置 base path**，默认就能工作。
 
 ---
 
