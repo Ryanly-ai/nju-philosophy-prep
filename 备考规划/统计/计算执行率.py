@@ -4,7 +4,7 @@
 
 公式：
   执行率 = 100 - Σ(连跳惩罚 × 阶段权重) + Σ(回血) + Σ(里程碑奖励)
-  - 起算日：2026-04-27（用户决定不计前期跳过）
+  - 起算日：2026-05-07（用户 2026-05-06 第二次清零，节奏不变重启）
   - 截止日：2026-12-20
   - 阶段权重：基础期 1.0 / 精读期 1.5 / 冲刺期 2.0 / 押题期 3.0
   - 连跳第 N 天扣分 = min(N, 5)
@@ -33,7 +33,7 @@ REPO_ROOT = Path(__file__).resolve().parent.parent.parent
 LOG_DIR = REPO_ROOT / "备考规划" / "每日日志"
 DASHBOARD_PATH = REPO_ROOT / "备考规划" / "统计" / "执行率仪表盘.md"
 
-START_DATE = date(2026, 4, 27)
+START_DATE = date(2026, 5, 7)
 END_DATE = date(2026, 12, 20)
 
 PHASES = [
@@ -230,7 +230,7 @@ def compute(today=None):
 def render_banner(s):
     if not s["started"]:
         return (
-            f"📊 **执行率：100 分** ⭐⭐⭐⭐⭐ **S 级** · 起算日 2026-04-27\n"
+            f"📊 **执行率：100 分** ⭐⭐⭐⭐⭐ **S 级** · 起算日 {START_DATE.isoformat()}\n"
             f"📅 距离考试 {s['days_to_exam']} 天 · 计算尚未启动 · 明天起每天打卡决定胜率"
         )
     parts = [
@@ -245,12 +245,12 @@ def render_dashboard(s):
     L = []
     L.append("# 📊 执行率仪表盘\n\n")
     L.append(f"> 自动生成 · 数据截止 **{s['as_of']}**\n")
-    L.append(f"> 起算日：**2026-04-27** · 截止：**2026-12-20** · 距考试 **{s['days_to_exam']}** 天\n\n")
+    L.append(f"> 起算日：**{START_DATE.isoformat()}** · 截止：**{END_DATE.isoformat()}** · 距考试 **{s['days_to_exam']}** 天\n\n")
     L.append("---\n\n")
 
     if not s["started"]:
         L.append("## ⏳ 计算尚未开始\n\n")
-        L.append("起算日是 **2026-04-27**。明天起，每天打卡 = 维持分数；跳过 = 扣分。\n\n")
+        L.append(f"起算日是 **{START_DATE.isoformat()}**。明天起，每天打卡 = 维持分数；跳过 = 扣分。\n\n")
         L.append("起步执行率：**100 分** ⭐⭐⭐⭐⭐ **S 级**\n\n")
     else:
         L.append("## 当前状态\n\n")
