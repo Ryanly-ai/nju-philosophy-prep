@@ -70,3 +70,39 @@
 3. 与同章其他卡不重复核心命题
 
 **超出上限的处理**：移入 `备考规划/读书笔记/{书名}/` 作为笔记，不上 Anki。
+
+---
+
+## 🔔 Bark 随机抽查推送（2026-04-30 配置）
+
+每天 7:00 - 22:00 每小时整点，随机抽一张「已学过」的郭齐勇标准卡组卡片推送到手机 Bark。
+
+### 文件
+- `anki_bark_push.py` — 抽卡 + 推送脚本（带 `--dry-run` 调试 / `--reset` 清当日去重）
+- `~/Library/LaunchAgents/com.ryan.anki-bark-push.plist` — launchd 调度（不在 repo 内）
+
+### 行为约定
+- 抽卡范围：`deck:"中哲::《中国哲学史》——郭齐勇::*" -is:new`（仅已学过的标准卡组）
+- 加权：标签 `#高频` 的卡权重 ×2
+- 去重：当日已推过的不重复抽（`/tmp/anki_bark_pushed_today.json`）
+- 跨日自动重置；当日全部轮一遍后也自动重置
+- 必须 Anki App 在线（占用 8765 端口），否则跳过当次
+
+### 常用命令
+```bash
+# 手工抽一张到手机
+python3 ~/Desktop/哲学史/备考规划/Anki生成/anki_bark_push.py
+
+# 干跑（只打印不推送）
+python3 ~/Desktop/哲学史/备考规划/Anki生成/anki_bark_push.py --dry-run
+
+# 清空当日去重记录（强制下次能抽到任意卡）
+python3 ~/Desktop/哲学史/备考规划/Anki生成/anki_bark_push.py --reset
+
+# 暂停 / 恢复 launchd 推送
+launchctl unload ~/Library/LaunchAgents/com.ryan.anki-bark-push.plist
+launchctl load   ~/Library/LaunchAgents/com.ryan.anki-bark-push.plist
+
+# 看运行日志
+tail /tmp/anki_bark_push.out.log /tmp/anki_bark_push.err.log
+```
