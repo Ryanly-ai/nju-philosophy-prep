@@ -78,8 +78,18 @@
 每天 7:00 - 22:00 每小时整点，随机抽一张「已学过」的郭齐勇标准卡组卡片推送到手机 Bark。
 
 ### 文件
-- `anki_bark_push.py` — 抽卡 + 推送脚本（带 `--dry-run` 调试 / `--reset` 清当日去重）
+- `anki_bark_push.py`（本目录）— **源码版本管理位置**
+- `~/Library/Scripts/anki_bark_push.py` — **launchd 实际运行的副本**
 - `~/Library/LaunchAgents/com.ryan.anki-bark-push.plist` — launchd 调度（不在 repo 内）
+
+### ⚠️ 为什么有两份脚本（macOS TCC 隐私保护）
+launchd 守护进程**没有权限读取 `~/Desktop/` 下文件**（macOS 的 TCC 机制），
+所以脚本不能直接从 git 仓库里跑——必须复制一份到 `~/Library/Scripts/`。
+
+**改脚本后必须同步**：
+```bash
+cp ~/Desktop/哲学史/备考规划/Anki生成/anki_bark_push.py ~/Library/Scripts/anki_bark_push.py
+```
 
 ### 行为约定
 - 抽卡范围：`deck:"中哲::《中国哲学史》——郭齐勇::*" -is:new`（仅已学过的标准卡组）
