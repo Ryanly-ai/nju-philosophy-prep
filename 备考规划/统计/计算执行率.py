@@ -66,23 +66,13 @@ def is_skipped(log_path):
     content = log_path.read_text(encoding="utf-8")
     if "⏸ 跳过日" in content or "⏸ 调整规划日" in content:
         return True
-    # 解析 "专业课实际用时：N 分钟" 或 "**专业课实际用时**：N 分钟"
-    m = re.search(r"专业课实际用时\*?\*?\s*[:：]?\*?\*?\s*_?_?\s*(\d+)?\s*_?_?\s*([分小]时|分钟|min|h)", content)
+    # 找「专业课实际用时」后面同一行（≤30 字符内）的第一个连续数字。
+    # 容忍各种格式：`90 分钟` / `_90_ 分钟`（Markdown 斜体）/ `90` / `80 分钟（备注）` 等。
+    # 限定 [^\n] 避免跨行匹配到下一字段（如「读到」）。
+    m = re.search(r"专业课实际用时[^\n]{0,30}?(\d+)", content)
     if not m:
-        # 退而求其次：找 "专业课实际用时" 后面的数字
-        m2 = re.search(r"专业课实际用时.{0,20}?(\d+)", content)
-        if not m2:
-            return True
-        val = m2.group(1)
-    else:
-        val = m.group(1)
-    if not val:
         return True
-    val = int(val)
-    if val == 0:
-        return True
-    # 单位是小时？>3 视为分钟
-    return False
+    return int(m.group(1)) == 0
 
 
 def grade(score):
