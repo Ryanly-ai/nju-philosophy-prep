@@ -19,6 +19,7 @@ Anki → Bark 随机抽卡推送
 """
 
 import json
+import os
 import sys
 import re
 import random
@@ -27,6 +28,11 @@ import urllib.error
 from datetime import date
 from html import unescape
 from pathlib import Path
+
+# ===== 关键：launchd 子进程不继承 NO_PROXY，必须在脚本里硬编码 =====
+# 否则系统代理（Surge/Clash 等）会把 localhost:8765 也代理掉，返回 502。
+os.environ["NO_PROXY"] = "localhost,127.0.0.1,::1,.local,api.day.app"
+os.environ["no_proxy"] = "localhost,127.0.0.1,::1,.local,api.day.app"
 
 # ===== 配置 =====
 ANKI_URL = "http://localhost:8765"
