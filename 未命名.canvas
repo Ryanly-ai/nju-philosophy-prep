@@ -1,0 +1,15 @@
+{
+	"nodes":[
+		{"id":"bcc50bdf8bb65344","x":-340,"y":0,"width":140,"height":50,"color":"1","type":"text","text":"中国哲学史\n"},
+		{"id":"f74a94006656e777","x":-160,"y":-220,"width":140,"height":60,"color":"1","type":"text","text":"先秦子学\n"},
+		{"id":"cbbfb6e30a454362","x":-125,"y":50,"width":250,"height":60,"type":"text","text":"法家"},
+		{"id":"856bb569aae84031","x":0,"y":-35,"width":250,"height":60,"type":"text","text":"兵家"},
+		{"id":"8f4a3c14805a7f1f","x":40,"y":-300,"width":120,"height":50,"type":"text","text":"道家"},
+		{"id":"8d08ce52cf310ba6","x":40,"y":-400,"width":100,"height":60,"type":"text","text":"儒家\n"}
+	],
+	"edges":[
+		{"id":"f889df8311e5fe3f","fromNode":"bcc50bdf8bb65344","fromSide":"right","toNode":"f74a94006656e777","toSide":"left"},
+		{"id":"c4e9106bb52cce95","fromNode":"f74a94006656e777","fromSide":"right","toNode":"8d08ce52cf310ba6","toSide":"left"},
+		{"id":"2ff2ef2b98bf6ea8","fromNode":"f74a94006656e777","fromSide":"right","toNode":"8f4a3c14805a7f1f","toSide":"left"}
+	]
+}
